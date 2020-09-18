@@ -1,6 +1,7 @@
 const app = require('../src/index')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
+const userController = require('../src/controllers/user')
 
 chai.use(chaiHttp)
 
@@ -33,7 +34,27 @@ describe('Users REST API', () => {
     })
   })
 
-  // describe('GET /user', ()=> {
-  //   // TODO Create test for the get method
-  // })
+  describe('GET /user', ()=> {
+    let user
+    beforeEach(() => {
+      user = {
+        username: 'vhardouin',
+        firstname: 'Vincent',
+        lastname: 'Hardouin'
+      }
+      userController.create(user, () => {})
+    })
+
+    it('should get user', (done) => {
+      chai.request(app)
+          .get('/user/' + user.username)
+          .then((res) => {
+            chai.expect(res).to.have.status(200)
+            done()
+          })
+          .catch((err) => {
+            throw err
+          })
+    })
+  })
 })
