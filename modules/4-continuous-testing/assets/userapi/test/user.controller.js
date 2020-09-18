@@ -31,19 +31,37 @@ describe('User', () => {
       })
     })
 
-    // it('avoid creating an existing user', (done)=> {
-    //   // TODO create this test
-    //   // Warning: the user already exists
-    //   done()
-    // })
+    it('avoid creating an existing user', (done)=> {
+      // TODO create this test
+      // Warning: the user already exists
+      done()
+    })
   })
 
-  // describe('Get', ()=> {
-  //   // TODO Create test for the get method
-  //   it('get a user by username', (done) => {
-  //     // 1. Create a user
-  //     // 2. Check the result of the get method is correct
-  //     done()
-  //   })
-  // })
+  describe('Get', ()=> {
+    it('should return error when username are not provided', (done) => {
+      users.get(null, (err, result) => {
+        expect(err).to.not.be.equal(null)
+        expect(result).to.be.equal(null)
+        done()
+      })
+    })
+
+    it('get a user by username', (done) => {
+      const user = {
+        username: 'vhardouin',
+        firstname: 'Vincent',
+        lastname: 'Hardouin'
+      }
+      users.create(user, (err, result) => {
+      })
+
+      users.get(user.username, (err, result) => {
+        expect(err).to.be.equal(null)
+        expect(result.firstname).to.deep.equal(user.firstname)
+        expect(result.lastname).to.deep.equal(user.lastname)
+        done()
+      })
+    })
+  })
 })
