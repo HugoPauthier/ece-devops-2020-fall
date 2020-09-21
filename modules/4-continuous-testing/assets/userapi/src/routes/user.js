@@ -10,9 +10,14 @@ userRouter
       resp.status(201).send(res)
     })
   })
-  // .get('/:username', (req, resp, next) => { // Express URL params - https://expressjs.com/en/guide/routing.html
-  //   // TODO Create get method API
-  //   const username = req.params.username
-  // })
+
+userRouter
+  .get('/:username', (req, resp, next) => { // Express URL params - https://expressjs.com/en/guide/routing.html
+    const username = req.params.username
+    user.get(username, (err, res) => {
+      if(err) return resp.status(500).send(err)
+      return resp.status(200).send(res)
+    })
+  })
   
 module.exports = userRouter

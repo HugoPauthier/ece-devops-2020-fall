@@ -18,7 +18,13 @@ module.exports = {
     })
   },
   
-  // get: (username, callback) => {
-  //   // TODO create this method
-  // }
+  get: (username, callback) => {
+    if(!username)
+      return callback(new Error("You should pass username"), null)
+
+    client.hgetall(username, (err, res) => {
+      if (err) return callback(err, null)
+      return callback(null, res)
+    })
+  }
 }
